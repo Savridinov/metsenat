@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from db.models import StudentDegree, StatusOfSponsorship, Gender
 
 
 class EEI(models.Model):
@@ -7,33 +8,29 @@ class EEI(models.Model):
 
 
 class Sponsors(models.Model):
-    STATUS = [('NEW', 'New'),
-              ('Checking', 'Checking'),
-              ('Verifayed', 'Verifayed'),
-              ('Denied', 'Denied'),
-              ]
-
     full_name = models.CharField(max_length=512)
     phone_number = PhoneNumberField(unique=True)
     sponsorship_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=9, choices=STATUS, default='New')
+    status = models.CharField(max_length=9, choices=StatusOfSponsorship.choices, default=StatusOfSponsorship.NEW)
     is_organization = models.BooleanField(default=False)
     organiztion_name = models.CharField(max_length=255, blank=True, null=True)
     reg_date = models.DateField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.full_name}'
+
 
 class Students(models.Model):
-    TYPE = [
-        ('Baklavr', 'Barlavr'),
-        ('Magistr', 'Magistr'),
-    ]
-
     full_name = models.CharField(max_length=512)
     phone_number = PhoneNumberField(unique=True)
-    type = models.CharField(max_length=7, choices=TYPE, default='Baklavr')
+    gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.MALE)
+    type = models.CharField(max_length=7, choices=StudentDegree.choices, default=StudentDegree.BAKLAVR)
     eei = models.ForeignKey(EEI, on_delete=models.PROTECT)
     contract_amount = models.DecimalField(max_digits=10, decimal_places=2)
     sponsor = models.ManyToManyField(Sponsors, through='SponsorStudent', related_name='student')
+
+    def __str__(self):
+        return f'{self.full_name}'
 
 
 class SponsorStudent(models.Model):
