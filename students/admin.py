@@ -1,13 +1,6 @@
 from django.contrib import admin
-from .models import Students, Sponsors, SponsorStudent
+from .models import Students, SponsorStudent
 admin.site.register(SponsorStudent)
-
-
-@admin.register(Sponsors)
-class SponsorsAdmin(admin.ModelAdmin):
-    search_fields = ('full_name', 'status')
-    list_filter = ('status',)
-    ordering = ('sponsorship_amount',)   #'spent_amount'
 
 
 @admin.register(Students)

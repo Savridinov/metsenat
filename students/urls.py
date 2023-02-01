@@ -1,5 +1,5 @@
 from django.urls import path
-from webcode.views import *
+from students.views import *
 
 urlpatterns = [
     # path('succes/', succes, name='success'),

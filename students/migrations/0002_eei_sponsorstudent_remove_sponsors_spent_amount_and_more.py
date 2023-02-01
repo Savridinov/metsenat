@@ -8,7 +8,7 @@ import phonenumber_field.modelfields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('webcode', '0001_initial'),
+        ('students', '0001_initial'),
     ]
 
     operations = [
@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='students',
             name='sponsor',
-            field=models.ManyToManyField(related_name='student', through='webcode.SponsorStudent', to='webcode.sponsors'),
+            field=models.ManyToManyField(related_name='student', through='students.SponsorStudent', to='students.sponsors'),
         ),
         migrations.AlterField(
             model_name='sponsors',
@@ -74,16 +74,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='sponsorstudent',
             name='sponsor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='webcode.sponsors'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='students.sponsors'),
         ),
         migrations.AddField(
             model_name='sponsorstudent',
             name='student',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='webcode.students'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='students.students'),
         ),
         migrations.AlterField(
             model_name='students',
             name='eei',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='webcode.eei'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='students.eei'),
         ),
     ]
