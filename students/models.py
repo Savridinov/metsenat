@@ -7,15 +7,18 @@ from sponsors.models import Sponsors
 class EEI(models.Model):
     name = models.CharField(max_length=512)
 
+    def __str__(self):
+        return self.name
+
 
 class Students(models.Model):
     full_name = models.CharField(max_length=512)
     phone_number = PhoneNumberField(unique=True)
     gender = models.CharField(max_length=1, choices=Gender.choices, blank=True, null=True)
-    type = models.CharField(max_length=7, choices=StudentDegree.choices, default=StudentDegree.BAKLAVR)
+    degree = models.CharField(max_length=7, choices=StudentDegree.choices, default=StudentDegree.BAKLAVR)
     eei = models.ForeignKey(EEI, on_delete=models.PROTECT)
     contract_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    sponsor = models.ManyToManyField(Sponsors, through='SponsorStudent', related_name='student')
+    sponsors = models.ManyToManyField(Sponsors, through='SponsorStudent', related_name='student')
 
     def __str__(self):
         return f'{self.full_name}'

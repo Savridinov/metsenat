@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from .models import *
-
-
-class SponsorsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Sponsors
-        fields = '__all__'
+from .models import Students
 
 
 class StudentsSerializer(serializers.ModelSerializer):
