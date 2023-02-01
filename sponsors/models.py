@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Sponsors(models.Model):
     full_name = models.CharField(max_length=512)
     phone_number = PhoneNumberField(unique=True)
-    gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.MALE)
+    gender = models.CharField(max_length=1, choices=Gender.choices, blank=True, null=True)
     sponsorship_amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=9, choices=StatusOfSponsorship.choices, default=StatusOfSponsorship.NEW)
     is_organization = models.BooleanField(default=False)
@@ -15,3 +15,4 @@ class Sponsors(models.Model):
 
     def __str__(self):
         return f'{self.full_name}'
+
