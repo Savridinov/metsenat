@@ -11,7 +11,8 @@ class Sponsors(models.Model):
     status = models.CharField(max_length=9, choices=StatusOfSponsorship.choices, default=StatusOfSponsorship.NEW)
     is_organization = models.BooleanField(default=False)
     organiztion_name = models.CharField(max_length=255, blank=True, null=True)
-    reg_date = models.DateField(auto_now_add=True)
+    reg_date = models.DateTimeField(auto_now_add=True)
+    updated_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.full_name}'

@@ -11,4 +11,5 @@ class StudentsAdmin(admin.ModelAdmin):
     list_filter = ('degree', 'gender')
     list_display = ('full_name', 'gender', 'phone_number', 'contract_amount')
     # ordering = ('alloted_amount', 'contract_amount')
+    readonly_fields = ('reg_date', 'updated_time')
 

@@ -1,5 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from rest_framework.exceptions import ValidationError
+
 from db.models import StudentDegree, Gender
 from sponsors.models import Sponsors
 
@@ -19,9 +21,16 @@ class Students(models.Model):
     eei = models.ForeignKey(EEI, on_delete=models.PROTECT)
     contract_amount = models.DecimalField(max_digits=10, decimal_places=2)
     sponsors = models.ManyToManyField(Sponsors, through='SponsorStudent', related_name='student')
+    reg_date = models.DateTimeField(auto_now_add=True)
+    updated_time = models.DateTimeField(auto_now=True)
+
+    alloted_amount = 0
 
     def __str__(self):
         return f'{self.full_name}'
+
+    def clean(self):
+        pass
 
 
 class SponsorStudent(models.Model):
@@ -29,3 +38,18 @@ class SponsorStudent(models.Model):
     student = models.ForeignKey(Students, on_delete=models.PROTECT)
     amount = models.FloatField()
     created_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.student.full_name} sponosred by {self.sponsor.full_name}'
+
+    def clean(self):
+        try:
+            self.student.alloted_amount += self.amount
+            if self.student.alloted_amount > self.student.contract_amount:
+                raise ValidationError('He/She don\'t need too much')
+        finally:
+            pass
+        if self.amount > self.sponsor.sponsorship_amount:
+            raise ValidationError('You don\'t have enough money')
+        if self.amount > self.student.contract_amount:
+            raise ValidationError('You exceed the value of the contract')
