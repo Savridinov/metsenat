@@ -15,6 +15,6 @@ class StatusOfSponsorship(models.TextChoices):
 
 
 class Gender(models.TextChoices):
-    # CONSTANT = db_value, user dislpay value
+    # CONSTANT = db_value, user display value
     MALE = 'M', 'Male'
     FEMALE = 'F', 'Female'
