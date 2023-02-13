@@ -17,7 +17,7 @@ class EEI(models.Model):
 class Students(models.Model):
     full_name = models.CharField(max_length=512)
     phone_number = PhoneNumberField(unique=True)
-    gender = models.CharField(max_length=1, choices=Gender.choices)
+    gender = models.CharField(max_length=1, choices=Gender.choices, blank=True, null=True)
     degree = models.CharField(max_length=7, choices=StudentDegree.choices, default=StudentDegree.BAKLAVR)
     eei = models.ForeignKey(EEI, on_delete=models.PROTECT)
     contract_amount = models.DecimalField(max_digits=10, decimal_places=2)
