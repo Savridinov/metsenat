@@ -28,6 +28,16 @@ class Students(models.Model):
     def __str__(self):
         return f'{self.full_name}'
 
+    @property
+    def alloted_money(self):
+        student_all_get = self.studentsponsor.aggregate(jami=Sum('amount')).get('jami')
+        # Second way wia loop
+        # money = 0
+        # for i in self.studentsponsor.all():
+        #     money += i.amount
+        # return money
+        return student_all_get
+
 
 class SponsorStudent(models.Model):
     sponsor = models.ForeignKey(Sponsors, related_name='sponsorstudent', on_delete=models.PROTECT)
@@ -45,4 +55,6 @@ class SponsorStudent(models.Model):
             raise ValidationError('You exceed the value of the contract')
         if self.sponsor.status != StatusOfSponsorship.VERIFAYED:
             raise ValidationError('At first you must verifayed')
+        if self.student.alloted_money > self.student.contract_amount:
+            raise ValidationError('This is alot of money yoi know')
 
