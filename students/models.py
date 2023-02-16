@@ -31,16 +31,18 @@ class Students(models.Model):
     @property
     def alloted_money(self):
         student_all_get = self.studentsponsor.aggregate(jami=Sum('amount')).get('jami')
+        if student_all_get:
+            return student_all_get
+        return 0
         # Second way wia loop
         # money = 0
         # for i in self.studentsponsor.all():
         #     money += i.amount
         # return money
-        return student_all_get
 
 
 class SponsorStudent(models.Model):
-    sponsor = models.ForeignKey(Sponsors, related_name='sponsorstudent', on_delete=models.PROTECT)
+    sponsor = models.ForeignKey(Sponsors, related_name='studentsponsor', on_delete=models.PROTECT)
     student = models.ForeignKey(Students, related_name='studentsponsor', on_delete=models.PROTECT)
     amount = models.FloatField()
     created_date = models.DateField(auto_now_add=True)
@@ -49,6 +51,7 @@ class SponsorStudent(models.Model):
         return f'{self.student.full_name} sponsored by {self.sponsor.full_name}'
 
     def clean(self):
+        print(self.student.alloted_money, self.student.contract_amount)
         if self.amount > self.sponsor.sponsorship_amount:
             raise ValidationError('You don\'t have enough money')
         if self.amount > self.student.contract_amount:
@@ -56,5 +59,5 @@ class SponsorStudent(models.Model):
         if self.sponsor.status != StatusOfSponsorship.VERIFAYED:
             raise ValidationError('At first you must verifayed')
         if self.student.alloted_money > self.student.contract_amount:
-            raise ValidationError('This is alot of money yoi know')
+            raise ValidationError('This is alot of money you know')
 

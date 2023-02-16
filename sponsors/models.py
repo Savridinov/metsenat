@@ -24,8 +24,8 @@ class Sponsors(models.Model):
             raise ValidationError('A person does\'t have organization name')
         if self.is_organization and not self.organization_name:
             raise ValidationError('Need organiztion name')
-        if not self.is_organization and self.gender:
+        if not self.is_organization and not self.gender:
             raise ValidationError('A gender of organization? huh??')
-        if self.is_organization and not self.gender:
+        if not self.is_organization and not self.gender:
             raise ValidationError('Who ar you? Male or Female')
 
