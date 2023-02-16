@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('student/', include('students.urls')),
-    path('sponsor/', include('sponsors.urls')),
+    path('', include('sponsors.urls')),
 
     path('doc', schema_view.with_ui('swagger', cache_timeout=0), name='doc_swagg'),
     path('redoc', schema_view.with_ui('redoc', cache_timeout=0), name='doc_redoc')

@@ -1,6 +1,10 @@
-from django.urls import path
-from .views import SponsorCreateAPIView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
+from .views import SponsorsViewSet
+
+router = DefaultRouter()
+router.register('sponsor', SponsorsViewSet)
 urlpatterns = [
-    path('create', SponsorCreateAPIView.as_view(), name='sponsor-create'),
+    path('', include(router.urls))
 ]
