@@ -9,5 +9,5 @@ class SponsorsSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['is_organisation'] is True and attrs['gender'] is not None:
-            raise serializers.ValidationError('Gender or Organisation field required')
+            raise serializers.ValidationError('Organisation don\'t have a gender')
 

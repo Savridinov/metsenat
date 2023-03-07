@@ -51,7 +51,6 @@ class SponsorStudent(models.Model):
         return f'{self.student.full_name} sponsored by {self.sponsor.full_name}'
 
     def clean(self):
-        print(self.student.alloted_money, self.student.contract_amount)
         if self.amount > self.sponsor.sponsorship_amount:
             raise ValidationError('You don\'t have enough money')
         if self.amount > self.student.contract_amount:
