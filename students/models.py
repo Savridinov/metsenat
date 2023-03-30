@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Sum
-from phonenumber_field.modelfields import PhoneNumberField
+# from phonenumber_field.modelfields import PhoneNumberField
 from rest_framework.exceptions import ValidationError
 
 from db.models import StudentDegree, Gender, StatusOfSponsorship
@@ -16,7 +16,7 @@ class EEI(models.Model):
 
 class Students(models.Model):
     full_name = models.CharField(max_length=512)
-    phone_number = PhoneNumberField(unique=True)
+    # phone_number = PhoneNumberField(unique=True)
     gender = models.CharField(max_length=1, choices=Gender.choices, blank=True, null=True)
     degree = models.CharField(max_length=7, choices=StudentDegree.choices, default=StudentDegree.BAKLAVR)
     eei = models.ForeignKey(EEI, on_delete=models.PROTECT)

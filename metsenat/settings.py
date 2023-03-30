@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'sponsors',
 
     #phone number field
-    'phonenumber_field',
+    # 'phonenumber_field',
 
     #drf
     'rest_framework',
